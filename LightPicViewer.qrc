@@ -1,1 +1,7 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/ico/panel">
+        <file>res/tool_bt_11.png</file>
+        <file>res/tool_bt_Full.png</file>
+        <file>res/tool_bt_right.png</file>
+    </qresource>
+</RCC>

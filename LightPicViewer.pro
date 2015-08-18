@@ -18,3 +18,6 @@ SOURCES += main.cpp\
 HEADERS  += picviewerwindow.h
 
 FORMS    += picviewerwindow.ui
+
+RESOURCES += \
+    LightPicViewer.qrc

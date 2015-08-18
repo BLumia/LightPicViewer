@@ -1,24 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>PicViewerWindow</class>
- <widget class="QMainWindow" name="PicViewerWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="PicViewerWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>600</width>
+    <height>400</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle">
    <string>PicViewerWindow</string>
   </property>
-  <widget class="QMenuBar" name="menuBar" />
-  <widget class="QToolBar" name="mainToolBar" />
-  <widget class="QWidget" name="centralWidget" />
-  <widget class="QStatusBar" name="statusBar" />
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#centralWidget {
+	font-family: &quot;Arial&quot;, &quot;宋体&quot;, &quot;Segoe UI&quot;, &quot;微软雅黑&quot;;
+	border-radius:5px;
+	border:1px solid gray;
+	background-color:rgba(0,0,0,180)
+}
+
+#closeBtn:hover {
+	background-color:rgba(225,0,0,200);
+	/*transition: background-color 0.5s;*/
+}
+
+#closeBtn {
+	border-radius:12px;
+	font-size: 18px;
+	color: #FFF;
+	background-color:rgba(225,255,255,0);
+	/*transition: background-color 0.5s;*/
+}
+
+#viewerLabel {
+	background-color:rgba(225,255,255,90);
+}
+
+QGroupBox {
+	border: 1px solid gray;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	margin-top: 0ex; /* leave space at the top for the title */
+}
+
+QPushButton {
+	border-radius:0px;
+	background-color:rgba(225,255,255,0);
+	/*transition: background-color 0.5s;*/
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QPushButton" name="closeBtn">
+    <property name="geometry">
+     <rect>
+      <x>568</x>
+      <y>5</y>
+      <width>24</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>×</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="viewerLabel">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>133</y>
+      <width>141</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>100</horstretch>
+      <verstretch>100</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="optionPanel">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>361</y>
+      <width>340</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QPushButton" name="origSizeBtn">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>5</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="LightPicViewer.qrc">
+       <normaloff>:/ico/panel/res/tool_bt_11.png</normaloff>:/ico/panel/res/tool_bt_11.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>22</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="autoRepeat">
+      <bool>false</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>62</x>
+       <y>6</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="LightPicViewer.qrc">
+       <normaloff>:/ico/panel/res/tool_bt_Full.png</normaloff>:/ico/panel/res/tool_bt_Full.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>22</width>
+       <height>22</height>
+      </size>
+     </property>
+    </widget>
+   </widget>
+  </widget>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
- <resources/>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="LightPicViewer.qrc"/>
+ </resources>
  <connections/>
 </ui>
