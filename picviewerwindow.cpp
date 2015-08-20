@@ -21,6 +21,21 @@ PicViewerWindow::PicViewerWindow(QWidget *parent) :
     //connect(frameSlider,SIGNAL(valueChanged(int)),this,SLOT(goToFrame(int)));
     //connect(speedSpinBox,SIGNAL(valueChanged(int)),movie,SLOT(setSpeed(int)));
 
+    //动画部分，窗口渐隐
+    fadeOutAnimation = new QPropertyAnimation(this, "windowOpacity");
+    fadeOutAnimation->setDuration(300);
+    fadeOutAnimation->setStartValue(1);
+    fadeOutAnimation->setEndValue(0);
+    //窗口调节大小动画
+    floatUpAnimation = new QPropertyAnimation(this, "geometry");
+    floatUpAnimation->setDuration(300);
+    floatUpAnimation->setEasingCurve(QEasingCurve::OutCirc);
+    //上面的两个动画组合并绑定动画完成后退出程序
+    exitAnimationGroup = new QParallelAnimationGroup;
+    exitAnimationGroup->addAnimation(fadeOutAnimation);
+    exitAnimationGroup->addAnimation(floatUpAnimation);
+    connect(exitAnimationGroup, SIGNAL(finished()), this, SLOT(close()));//动画效果结束后隐藏
+
     ui->viewerLabel->setMovie(movie);
     movie->start();
 }
@@ -28,6 +43,7 @@ PicViewerWindow::PicViewerWindow(QWidget *parent) :
 PicViewerWindow::~PicViewerWindow()
 {
     delete ui;
+    delete fadeOutAnimation;
 }
 
 void PicViewerWindow::mousePressEvent(QMouseEvent *event)
@@ -53,6 +69,8 @@ void PicViewerWindow::mouseReleaseEvent(QMouseEvent *)
 
 void PicViewerWindow::mouseMoveEvent(QMouseEvent *event)
 {
+    // 无边框窗体的边缘拖动resize方案参考了如下博客的代码
+    // http://www.cnblogs.com/xufeiyang/p/3313104.html
     QPoint gloPoint = event->globalPos();
     QRect rect = this->rect();
     QPoint tl = mapToGlobal(rect.topLeft());
@@ -159,13 +177,19 @@ void PicViewerWindow::openPic(QString fileName) {
 
 void PicViewerWindow::on_closeBtn_clicked()
 {
-    qApp->exit();//主窗口关闭后，关闭程序
+    floatUpAnimation->setStartValue(QRect(this->geometry().x(), this->geometry().y(), this->geometry().width(), this->geometry().height()));
+    floatUpAnimation->setEndValue(QRect(this->geometry().x(), this->geometry().y()-80, this->geometry().width(), this->geometry().height()));
+    exitAnimationGroup->start();//动画完成之后，程序将退出
+    //qApp->exit();//主窗口关闭后，关闭程序
 }
 
 void PicViewerWindow::mouseDoubleClickEvent(QMouseEvent *event)
 {
     event->accept();
-    qApp->exit();//主窗口关闭后，关闭程序
+    floatUpAnimation->setStartValue(QRect(this->geometry().x(), this->geometry().y(), this->geometry().width(), this->geometry().height()));
+    floatUpAnimation->setEndValue(QRect(this->geometry().x(), this->geometry().y()-80, this->geometry().width(), this->geometry().height()));
+    exitAnimationGroup->start();//动画完成之后，程序将退出
+    //qApp->exit();//主窗口关闭后，关闭程序
 }
 
 void PicViewerWindow::region(const QPoint &cursorGlobalPoint)
@@ -211,5 +235,5 @@ void PicViewerWindow::region(const QPoint &cursorGlobalPoint)
 void PicViewerWindow::resizeEvent(QResizeEvent *)
 {
     ui->closeBtn->setGeometry(width()- 29, 5, 24, 24);
-    ui->optionPanel->setGeometry(width()/2- 170, height()-40, 340, 40);
+    ui->optionPanel->setGeometry(width()/2 - ui->optionPanel->width()/2, height()-40, 340, 40);
 }

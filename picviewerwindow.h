@@ -32,6 +32,9 @@ private:
     bool clickOnFrame;
     QString currentMovieDirectory;
     QPoint drag_pos;//用于窗口拖动，存储鼠标坐标
+    QPropertyAnimation *fadeOutAnimation;
+    QPropertyAnimation *floatUpAnimation;
+    QParallelAnimationGroup *exitAnimationGroup;
     void openPic(QString fileName);
     void region(const QPoint &cursorGlobalPoint);
 
