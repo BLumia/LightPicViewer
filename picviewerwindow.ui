@@ -194,6 +194,9 @@ QPushButton {
      </property>
     </widget>
    </widget>
+   <zorder>viewerLabel</zorder>
+   <zorder>closeBtn</zorder>
+   <zorder>optionPanel</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

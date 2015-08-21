@@ -28,6 +28,8 @@ private:
     Ui::PicViewerWindow *ui;
 
     QMovie *movie;
+    double picCenterPctX;
+    double picCenterPctY;
     int mouseDir;//鼠标在窗口边缘时的标记
     bool clickOnFrame;
     QString currentMovieDirectory;
@@ -37,6 +39,7 @@ private:
     QParallelAnimationGroup *exitAnimationGroup;
     void openPic(QString fileName);
     void region(const QPoint &cursorGlobalPoint);
+    QRect getPicRect(double zoomPct);
 
 private slots:
     void mousePressEvent(QMouseEvent *event);

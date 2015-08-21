@@ -12,6 +12,9 @@ PicViewerWindow::PicViewerWindow(QWidget *parent) :
     this->setWindowFlags(Qt::FramelessWindowHint);// | Qt::Tool
     this->setAttribute(Qt::WA_TranslucentBackground, true);//背景透明（需要上一行配合）
 
+    picCenterPctX = 0.5;
+    picCenterPctY = 0.5;
+
     movie = new QMovie(this);
     movie->setCacheMode(QMovie::CacheAll);
     currentMovieDirectory="movies";
@@ -44,6 +47,8 @@ PicViewerWindow::~PicViewerWindow()
 {
     delete ui;
     delete fadeOutAnimation;
+    delete floatUpAnimation;
+    delete exitAnimationGroup;
 }
 
 void PicViewerWindow::mousePressEvent(QMouseEvent *event)
@@ -172,6 +177,7 @@ void PicViewerWindow::openPic(QString fileName) {
     QPixmap img(fileName);
 
     ui->viewerLabel->resize(img.width(),img.height());
+    ui->viewerLabel->setGeometry(getPicRect(1));//载入后更新图片位置
 
 }
 
@@ -236,4 +242,15 @@ void PicViewerWindow::resizeEvent(QResizeEvent *)
 {
     ui->closeBtn->setGeometry(width()- 29, 5, 24, 24);
     ui->optionPanel->setGeometry(width()/2 - ui->optionPanel->width()/2, height()-40, 340, 40);
+    ui->viewerLabel->setGeometry(getPicRect(1));
+}
+
+QRect PicViewerWindow::getPicRect(double zoomPct) {
+    //暂时忽略缩放比例
+    QRect rect;
+    rect.setLeft(width()*picCenterPctX - ui->viewerLabel->width()/2);
+    rect.setTop(height()*picCenterPctY - ui->viewerLabel->height()/2);
+    rect.setWidth(ui->viewerLabel->width());
+    rect.setHeight(ui->viewerLabel->height());
+    return rect;
 }
