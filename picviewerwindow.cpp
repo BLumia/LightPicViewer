@@ -15,6 +15,9 @@ PicViewerWindow::PicViewerWindow(QWidget *parent) :
     picCenterPctX = 0.5;
     picCenterPctY = 0.5;
 
+    vScrollBar=ui->picScrollArea->verticalScrollBar();
+    hScrollBar=ui->picScrollArea->horizontalScrollBar();
+
     movie = new QMovie(this);
     movie->setCacheMode(QMovie::CacheAll);
     currentMovieDirectory="movies";
@@ -58,6 +61,8 @@ void PicViewerWindow::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton)
     {
         drag_pos = event->pos();
+        scrollBarValue.setX(vScrollBar->value());
+        scrollBarValue.setY(hScrollBar->value());
         clickOnFrame = true;//点击到窗口框架上才会变成true，改动之后新增功能：判断点击是否在边框右侧
         event->accept();
     }
@@ -66,6 +71,12 @@ void PicViewerWindow::mousePressEvent(QMouseEvent *event)
 void PicViewerWindow::mouseReleaseEvent(QMouseEvent *)
 {
     clickOnFrame = false;//弹起鼠标按键时，恢复
+    /*
+    scrollBarValue.setX(vScrollBar->isEnabled());
+    scrollBarValue.setY(hScrollBar->value());
+    vScrollBar->setValue(scrollBarValue.y() );
+    hScrollBar->setValue(scrollBarValue.x() );
+    */
     if(mouseDir != NONE) {
         this->releaseMouse();
         this->setCursor(QCursor(Qt::ArrowCursor));
@@ -133,7 +144,16 @@ void PicViewerWindow::mouseMoveEvent(QMouseEvent *event)
             }
             this->setGeometry(rMove);
         } else {
-            move(event->globalPos() - drag_pos);
+            //滚动条宽度都改成了1px，以是否可见滚动条为判别移动图片还是窗体
+            //尚不能判断拖动的是图片还是窗体
+            if (vScrollBar->isVisible() || hScrollBar->isVisible()) {
+                int xvalue = event->x()-drag_pos.x();
+                int yvalue = event->y()-drag_pos.y();
+                vScrollBar->setValue(scrollBarValue.y()-yvalue);
+                hScrollBar->setValue(scrollBarValue.x()-xvalue);
+            } else {
+                move(gloPoint - drag_pos);
+            }
         }
         event->accept();
     }
@@ -177,7 +197,7 @@ void PicViewerWindow::openPic(QString fileName) {
     QPixmap img(fileName);
 
     ui->viewerLabel->resize(img.width(),img.height());
-    ui->viewerLabel->setGeometry(getPicRect(1));//载入后更新图片位置
+    //ui->viewerLabel->setGeometry(getPicRect(1));//载入后更新图片位置
 
 }
 
@@ -242,7 +262,8 @@ void PicViewerWindow::resizeEvent(QResizeEvent *)
 {
     ui->closeBtn->setGeometry(width()- 29, 5, 24, 24);
     ui->optionPanel->setGeometry(width()/2 - ui->optionPanel->width()/2, height()-40, 340, 40);
-    ui->viewerLabel->setGeometry(getPicRect(1));
+    ui->picScrollArea->setGeometry(0,0,width(),height());
+    //ui->viewerLabel->setGeometry(getPicRect(1));
 }
 
 QRect PicViewerWindow::getPicRect(double zoomPct) {

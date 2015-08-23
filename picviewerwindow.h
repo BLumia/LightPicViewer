@@ -34,6 +34,9 @@ private:
     bool clickOnFrame;
     QString currentMovieDirectory;
     QPoint drag_pos;//用于窗口拖动，存储鼠标坐标
+    QPoint scrollBarValue;//存储两个滚动条的数值用于拖动
+    QScrollBar *vScrollBar;
+    QScrollBar *hScrollBar;
     QPropertyAnimation *fadeOutAnimation;
     QPropertyAnimation *floatUpAnimation;
     QParallelAnimationGroup *exitAnimationGroup;

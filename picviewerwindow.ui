@@ -62,7 +62,18 @@ QPushButton {
 	background-color:rgba(225,255,255,0);
 	/*transition: background-color 0.5s;*/
 }
-</string>
+
+QScrollBar:vertical {
+    width:1px;
+}
+
+QScrollBar:horizontal {
+    height:1px;
+}
+
+#optionPanel {
+	background-color:rgba(0,0,0,180)
+}</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="closeBtn">
@@ -86,6 +97,9 @@ QPushButton {
       <width>370</width>
       <height>40</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="title">
      <string/>
@@ -176,8 +190,14 @@ QPushButton {
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgba(255, 255, 255, 20);
+     <string notr="true">background-color: rgba(255, 255, 255, 0);
 border-radius:5px;</string>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
     </property>
     <property name="widgetResizable">
      <bool>true</bool>
@@ -199,7 +219,7 @@ border-radius:5px;</string>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>180</width>
           <height>20</height>
          </size>
         </property>
@@ -212,7 +232,7 @@ border-radius:5px;</string>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>180</width>
           <height>20</height>
          </size>
         </property>
@@ -235,11 +255,20 @@ border-radius:5px;</string>
           <height>0</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>OpenHandCursor</cursorShape>
+        </property>
         <property name="autoFillBackground">
          <bool>false</bool>
         </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgba(255, 255, 255, 20);</string>
+        </property>
         <property name="text">
          <string>TextLabel</string>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -254,7 +283,7 @@ border-radius:5px;</string>
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>40</height>
+          <height>90</height>
          </size>
         </property>
        </spacer>
@@ -267,7 +296,7 @@ border-radius:5px;</string>
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>40</height>
+          <height>90</height>
          </size>
         </property>
        </spacer>
